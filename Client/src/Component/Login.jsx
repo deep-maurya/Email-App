@@ -3,34 +3,22 @@ import logo from '../assets/onebox.png';
 import Googlelogo from '../assets/Frame.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUserData } from '../Context/UserData';
 
 export const Login = () => {
-  const [user, setUser] = useState(null);
+  const { userData, setUserData, logout } = useUserData();
   const navigate = useNavigate();
-  useEffect(() => {
-    axios.get('http://localhost:5000/auth/me', {
-      withCredentials: true,
-    })
-      .then(res => {
-        if (res.data.message !== 'Unauthorized') {
-          setUser(res.data);
-          console.log(res.data);
-        }
-      })
-      .catch(err => console.error('Error fetching user:', err));
-  }, []);
-
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:5000/auth/google';
   };
 
-  const handleLogout = () => {
-    axios.get('http://localhost:5000/logout', {
-      withCredentials: true,
-    }) .then(() => setUser(null))
-      .catch(err => console.error('Logout error:', err));
-  };
+  useEffect(() => {
+    if (userData.name) {
+      navigate('/dashboard');
+    }
+  }, [userData, navigate]);
+
 
   return (
     <div style={{ backgroundColor: "#000000" }} className="h-screen overflow-hidden flex flex-col justify-between">
@@ -43,9 +31,7 @@ export const Login = () => {
         <div style={{ border: "1px solid #343A40", backgroundColor: "#121212" }} className="p-10 shadow-lg rounded-lg w-[100%] md:w-[450px] lg:w-[500px]">
           <h2 className="text-center text-white text-xl mb-5">Create new Account</h2>
           <div style={{ marginBottom: "50px" }} className="text-center">
-            {user ? (
-              navigate('/dashboard')
-            ) : (
+            (
               <div>
                 <button
                   className="flex justify-center gap-5 text-white px-4 py-2 w-full rounded"
@@ -66,9 +52,9 @@ export const Login = () => {
                   Create an Account
                 </button>
               </div>
-            )}
+            )
           </div>
-          {!user && (
+          {!userData.name=='' && (
             <p className="text-center text-[#909296]">
               Already have an account? <span className="text-[#C1C2C5]"> <Link to={'/page1'}>Sign In</Link> </span>
             </p>

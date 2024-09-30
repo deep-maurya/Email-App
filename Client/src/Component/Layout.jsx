@@ -3,9 +3,11 @@ import { Home, BarChart, ChevronDown, Sun, Moon, UserRoundSearch, Mail, Send, In
 import logo from "../assets/Logo_12.png";
 import { Link } from 'react-router-dom';
 import { useTheme } from '../Context/ThemeContext';
+import { useUserData } from '../Context/UserData';
 
 export function Layout({ children }) {
   const { theme, ToggleTheme } = useTheme();
+  const { userData, logout } = useUserData();
   return (
     <div className={`flex h-screen ${theme != 'light' ? 'dark' : ''}`}>
       <aside className="flex h-full w-16 flex-col items-center overflow-y-auto bg-white dark:bg-[#101113] py-5">
@@ -35,8 +37,8 @@ export function Layout({ children }) {
         </nav>
 
         <div className="flex flex-col items-center space-y-6">
-          <div style={{ backgroundColor: "#084f33", color: "white", height: "35px", width: "35px", padding: "5px", borderRadius: "50%" }}>
-            AS
+          <div >
+            <img style={{height: "35px", width: "35px", borderRadius: "50%" }} src={userData.profile} alt=""/>
           </div>
         </div>
       </aside>
@@ -53,7 +55,7 @@ export function Layout({ children }) {
             </button>
             <div className="">
               <h1 className="flex gap-2 items-center text-gray-700 dark:text-gray-300">
-                <span className='hidden md:block'>Tim's workspace</span> <ChevronDown />
+                <span className='hidden md:block'> {(userData.name).split(' ')[0]} </span> <img style={{height: "40px", width: "40px", borderRadius: "50%" }} src={userData.profile} alt="" /> <button onClick={logout}><ChevronDown /></button>
               </h1>
             </div>
           </div>
