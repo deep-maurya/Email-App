@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout } from '../Component/Layout'
 import mainimage from "../assets/No_Message_illustration.png"
-export const Page1 = () => {
+export const DashBoard = () => {
   return (
     <>
     <Layout>
