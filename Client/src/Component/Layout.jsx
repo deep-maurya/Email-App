@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Home, BarChart, Copy, Bookmark, Users, Settings, ChevronDown, Sun, Moon, UserRoundSearch, Mail, Send, Inbox, Logs } from 'lucide-react';
+import React from 'react';
+import { Home, BarChart, ChevronDown, Sun, Moon, UserRoundSearch, Mail, Send, Inbox, Logs } from 'lucide-react';
 import logo from "../assets/Logo_12.png";
 import { Link } from 'react-router-dom';
+import { useTheme } from '../Context/ThemeContext';
 
 export function Layout({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem('theme', newMode ? 'dark' : 'light');
-  };
-
+  const { theme, ToggleTheme } = useTheme();
   return (
-    <div className={`flex h-screen ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`flex h-screen ${theme != 'light' ? 'dark' : ''}`}>
       <aside className="flex h-full w-16 flex-col items-center overflow-y-auto bg-white dark:bg-[#101113] py-5">
         <nav className="flex flex-1 flex-col items-center space-y-6">
           <img src={logo} alt="Logo" style={{ marginBottom: "50px" }} className="h-8 w-8" />
@@ -59,9 +47,9 @@ export function Layout({ children }) {
           <div className="flex gap-4 items-center">
             <button
               className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300"
-              onClick={toggleTheme}
+              onClick={ToggleTheme}
             >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              {theme != 'light' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <div className="">
               <h1 className="flex gap-2 items-center text-gray-700 dark:text-gray-300">
