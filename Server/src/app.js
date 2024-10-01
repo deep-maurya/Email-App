@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONT_END,
+  origin: true, 
   credentials: true
 }));
 
@@ -23,10 +23,11 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none'
+    secure: false,
+    sameSite: 'lax'
   }
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,7 +44,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_SECRET_ID,
-  callbackURL: `${process.env.BACK_END}/auth/google/callback`,
+  callbackURL: `${process.env.BACK_END}auth/google/callback`,
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await UserModel.findOne({ email: profile.emails[0].value });
