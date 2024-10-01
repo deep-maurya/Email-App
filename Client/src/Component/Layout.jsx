@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, BarChart, ChevronDown, Sun, Moon, UserRoundSearch, Mail, Send, Inbox, Logs } from 'lucide-react';
+import { Home, BarChart, ChevronDown, Sun, Moon, UserRoundSearch, Mail, Send, Inbox, Logs, LogOutIcon } from 'lucide-react';
 import logo from "../assets/Logo_12.png";
 import { Link } from 'react-router-dom';
 import { useTheme } from '../Context/ThemeContext';
@@ -16,13 +16,13 @@ export function Layout({ children }) {
           <Link to={'#'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
             <Home size={24} />
           </Link>
-          <Link to={'#'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+          <Link to={'/page2'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
             <UserRoundSearch size={24} />
           </Link>
-          <Link to={'#'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+          <Link to={'/page3'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
             <Mail size={24} />
           </Link>
-          <Link to={'#'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+          <Link to={'/page4'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
             <Send size={24} />
           </Link>
           <Link to={'#'} className="rounded-lg p-1.5 text-gray-700 dark:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
@@ -55,7 +55,7 @@ export function Layout({ children }) {
             </button>
             <div className="">
               <h1 className="flex gap-2 items-center text-gray-700 dark:text-gray-300">
-                <span className='hidden md:block'> {(userData.name).split(' ')[0]} </span> <img style={{height: "40px", width: "40px", borderRadius: "50%" }} src={userData.profile} alt="" /> <button onClick={logout}><ChevronDown /></button>
+                <span className='hidden md:block'> {(userData.name).split(' ')[0]} </span> <img style={{height: "40px", width: "40px", borderRadius: "50%" }} src={userData.profile} alt="" /> <button onClick={logout}><LogOutIcon /></button>
               </h1>
             </div>
           </div>

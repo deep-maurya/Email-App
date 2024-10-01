@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const { Dbconnect } = require('./config/DB');
 const cors = require("cors");
 const { UserModel } = require('./Models/User');
+const { userRouter } = require('./Routes/User');
+const { check_auth } = require('./Middleware/Passport');
 
 
 dotenv.config();
@@ -25,7 +27,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use('/user',userRouter)
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -76,13 +78,14 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 );
 
 
-app.get('/auth/me', (req, res) => {
-  if (req.isAuthenticated()) {
+
+app.get(
+  '/auth/me', 
+  check_auth,
+  (req,res)=>{
     res.json(req.user);
-  } else {
-    res.status(401).json({ message: 'Unauthorized' });
   }
-});
+);
 
 
 app.get('/logout', (req, res) => {
