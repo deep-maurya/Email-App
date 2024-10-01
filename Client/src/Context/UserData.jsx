@@ -21,7 +21,7 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/auth/me', {
+                const res = await axios.get('https://email-app-ppki.onrender.com/auth/me', {
                     withCredentials: true,
                 });
                 if (res.data.message !== 'Unauthorized') {
@@ -40,7 +40,7 @@ export const UserContextProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.get('http://localhost:5000/logout', { withCredentials: true });
+            await axios.get('https://email-app-ppki.onrender.com/logout', { withCredentials: true });
             setUserData({
                 name: "",
                 email: "",
