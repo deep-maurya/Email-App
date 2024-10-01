@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONT_END,
   credentials: true
 }));
 
@@ -41,7 +41,7 @@ passport.deserializeUser((obj, done) => {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_SECRET_ID,
-  callbackURL: 'http://localhost:5000/auth/google/callback',
+  callbackURL: `${process.env.BACK_END}auth/google/callback`,
 },async(accessToken, refreshToken, profile, done) => {
     try {
       let user = await UserModel.findOne({ email: profile.emails[0].value });
@@ -73,7 +73,7 @@ app.get('/auth/google', passport.authenticate('google', {
 app.get('/auth/google/callback', passport.authenticate('google', {
   failureRedirect: '/login',
   }),(req, res) => {
-    res.redirect('http://localhost:5173/');
+    res.redirect(process.env.FRONT_END);
   }
 );
 
